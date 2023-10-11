@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>アカウント一覧</title>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+		integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+</head>
+
+<body>
+	<div class="container-fluid">
+		<h1>アカウント一覧</h1>
+		<div class="alert alert-danger" role="alert" th:if="${errorMessage != null}" th:text="${errorMessage}" />
+		<form method="get" th:action="@{/sample/menu}">
+			<button type="submit" class="btn btn-primary" style="margin:20px 0px;">
+				<div class="mx-2">
+					メニューへ戻る
+				</div>
+			</button>
+		</form>
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col">ユーザID</th>
+					<th scope="col">ユーザ名</th>
+					<th scope="col">管理者権限</th>
+					<th scope="col" />
+					<th scope="col" />
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<form method="post" th:action="@{/createAccount}">
+						<td>
+							<input type="text" class="form-control" id="userId" name="userId">
+						</td>
+						<td>
+							<input type="password" class="form-control" id="password" name="password">
+						</td>
+						<td>
+							<select id="adminFlg" class="form-control">
+								<option value="0" selected>なし</option>
+								<option value="1">あり</option>
+							</select>
+						</td>
+						<td>
+							<form method="post" th:action="@{/goEditAccount}">
+								<button type="submit" class="btn btn-primary">
+									<div class="mx-2">
+										作成
+									</div>
+								</button>
+							</form>
+						</td>
+					</form>
+				</tr>
+				<th:block th:each="user : ${userList}">
+					<tr>
+						<td th:text="${user.userId}" />
+						<td th:text="${user.userName}" />
+						<td th:if="${user.adminFlg} == 1" th:text="あり" />
+						<td th:if="${user.adminFlg} != 1" th:text="なし" />
+						<td>
+							<form method="post" th:action="@{/goEditAccount}">
+								<button type="submit" class="btn btn-primary">
+									<div class="mx-2">
+										編集
+									</div>
+								</button>
+							</form>
+						</td>
+						<td>
+							<form method="post" th:action="@{/deleteAccount}">
+								<button type="submit" class="btn btn-primary">
+									<div class="mx-2">
+										削除
+									</div>
+								</button>
+							</form>
+						</td>
+					</tr>
+				</th:block>
+			</tbody>
+		</table>
+	</div>
+</body>
+
+</html>

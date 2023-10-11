@@ -13,17 +13,18 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Controller
-public class SuccessController {
+public class AccountListController {
 	
-	private final UserMstDao userDao;
+	private final UserMstDao userMstDao;
 	
-	@GetMapping(path = "/sample/success")
-	public String successPage(HttpServletRequest request, Model model){
+	@GetMapping(path = "/sample/accountList")
+	public String accountListPage(HttpServletRequest request, Model model){
         if(Session.getErrorMessage(request) != null) {
             model.addAttribute("errorMessage", Session.getErrorMessage(request));
             Session.setErrorMessage(request, null);
         }
-		return "sample/success";
+        model.addAttribute("userList", userMstDao.selectAll());
+		return "sample/accountList";
 	}
 	
 }

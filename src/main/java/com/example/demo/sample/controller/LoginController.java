@@ -43,7 +43,7 @@ public class LoginController {
       }
       Session.setErrorMessage(request, null);
       Session.setUser(request, resultUser.get(0));
-      return "redirect:sample/success";
+      return "redirect:sample/menu";
   }
 	
 	private boolean isValidPassword(String registeredPassword, String inputPassword) throws NoSuchAlgorithmException{

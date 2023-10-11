@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>メニュー</title>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+		integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+</head>
+
+<body>
+	<div class="container-fluid">
+		<h1>メニュー</h1>
+		<div class="alert alert-danger" role="alert" th:if="${errorMessage != null}" th:text="${errorMessage}" />
+		<div th:if="${user.adminFlg == 1}">
+			<hr>
+			<h2>管理者メニュー</h2>
+			<form method="post" th:action="@{/goAccountList}">
+				<button type="submit" class="btn btn-primary">
+					<div class="mx-2">
+						アカウント一覧
+					</div>
+				</button>
+			</form>
+		</div>
+		<div>
+			<hr>
+			<h2>一般メニュー</h2>
+			<button type="submit" class="btn btn-primary">
+				<div class="mx-2">
+					機能1
+				</div>
+			</button>
+			<button type="submit" class="btn btn-primary">
+				<div class="mx-2">
+					機能2
+				</div>
+			</button>
+		</div>
+	</div>
+</body>
+
+</html>
