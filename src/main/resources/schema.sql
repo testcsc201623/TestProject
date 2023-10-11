@@ -3,6 +3,7 @@ create table user_mst (
     user_id varchar(128) not null,
     password varchar(256) not null,
     user_name varchar(128) not null,
+    admin_flg INT(1) not null,
     create_date_time DATETIME not null,
     update_date_time DATETIME not null,
     primary key(user_id)

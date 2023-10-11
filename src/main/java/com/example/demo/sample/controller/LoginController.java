@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.common.Constant;
 import com.example.demo.common.model.Session;
-import com.example.demo.sample.dao.UserDao;
+import com.example.demo.sample.dao.UserMstDao;
 
 import lombok.RequiredArgsConstructor;
 
@@ -22,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 @Controller
 public class LoginController {
 	
-	private final UserDao userDao;
+	private final UserMstDao userMstDao;
 	
 	@GetMapping(path = "/sample/login")
 	public String loginPage(HttpServletRequest request, Model model){
@@ -35,7 +35,7 @@ public class LoginController {
 	
   @PostMapping(path = "/login")
   public String login(HttpServletRequest request, Model model, @RequestParam("userId") String userId, @RequestParam("password") String password) throws NoSuchAlgorithmException{
-      var resultUser = userDao.selectUser(userId);
+      var resultUser = userMstDao.selectUser(userId);
       request.changeSessionId();
       if(resultUser.size() != 1 || !isValidPassword(resultUser.get(0).getPassword(),password)){
           Session.setErrorMessage(request, "ログインに失敗しました。");

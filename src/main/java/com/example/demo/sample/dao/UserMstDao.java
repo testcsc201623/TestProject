@@ -6,11 +6,14 @@ import org.seasar.doma.Dao;
 import org.seasar.doma.Select;
 import org.seasar.doma.boot.ConfigAutowireable;
 
-import com.example.demo.common.entity.User;
+import com.example.demo.common.entity.UserMst;
 
 @Dao
 @ConfigAutowireable
-public interface UserDao {
+public interface UserMstDao {
 	@Select
-    List<User> selectUser(String userId);
+    List<UserMst> selectAll();
+	
+	@Select
+    List<UserMst> selectUser(String userId);
 }

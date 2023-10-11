@@ -2,13 +2,13 @@ package com.example.demo.common.model;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.example.demo.common.entity.User;
+import com.example.demo.common.entity.UserMst;
  
 public class Session {
-    public static User getUser(HttpServletRequest request) {
-        return (User) request.getSession().getAttribute("user");
+    public static UserMst getUser(HttpServletRequest request) {
+        return (UserMst) request.getSession().getAttribute("user");
     }
-    public static void setUser(HttpServletRequest request, User user) {
+    public static void setUser(HttpServletRequest request, UserMst user) {
         request.getSession().setAttribute("user", user);
     }
  

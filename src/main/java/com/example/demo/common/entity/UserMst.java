@@ -12,7 +12,7 @@ import lombok.Data;
 @Entity
 @Data
 @Table(name = "user_mst")
-public class User {
+public class UserMst {
     @Id
     @Column(name = "user_id")
     public String userId;
@@ -22,6 +22,9 @@ public class User {
  
     @Column(name = "user_name")
     public String userName;
+    
+    @Column(name = "admin_flg")
+    public int adminFlg;
  
     @Column(name = "create_date_time")
     public Date createDateTime;
