@@ -26,11 +26,7 @@ public class MenuController {
 	}
 
 	@PostMapping(path = "/goAccountList")
-	public String login(HttpServletRequest request, Model model) {
-		if (Session.getUser(request).getAdminFlg() != 1) {
-			Session.setErrorMessage(request, "管理者権限がありません");
-			return "redirect:sample/menu";
-		}
+	public String goAccountList(HttpServletRequest request, Model model) {
 		Session.setErrorMessage(request, null);
 		return "redirect:sample/accountList";
 	}
