@@ -40,8 +40,13 @@ public class AccountListController {
 		//TODO アカウント作成機能実装
 		return "redirect:sample/accountList";
 	}
-	
-	//TODO goEditAccount用コントローラ作成……アカウント編集ページに遷移する。アカウント編集ページはまだ未実装のため、自分で作成すること
-	
+
+	@PostMapping(path = "/goEditAccount")
+	public String goEditAccount(RedirectAttributes redirectAttribute, Model model,
+			@RequestParam("editUserId") String editUserId) {
+		redirectAttribute.addAttribute("userId", editUserId);
+		return "redirect:sample/editAccount";
+	}
+
 	//TODO deleteAccount用コントローラ作成……クライアント側からuser_idを受け取りuser_idをキーにuser_mstから削除する
 }

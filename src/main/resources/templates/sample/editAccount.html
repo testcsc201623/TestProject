@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>アカウント編集</title>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+		integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+</head>
+
+<body>
+
+	<div class="container-fluid">
+		<h1>アカウント編集</h1>
+		<div class="alert alert-danger" role="alert" th:if="${errorMessage != null}" th:text="${errorMessage}" />
+		<div class='btn-toolbar' role="toolbar" style="margin:20px 0px;">
+			<form method="get" th:action="@{/sample/menu}">
+				<div class="btn-group mr-3" role="group">
+					<button type="submit" class="btn btn-primary">
+						<div class="mx-2">
+							メニューへ戻る
+						</div>
+					</button>
+				</div>
+			</form>
+			<form method="get" th:action="@{/sample/accountList}">
+				<div class="btn-group mr-3" role="group">
+					<button type="submit" class="btn btn-primary">
+						<div class="mx-2">
+							アカウント一覧へ戻る
+						</div>
+					</button>
+				</div>
+			</form>
+		</div>
+		<div>
+			<hr>
+			<form method="post" th:action="@{/editAccount}">
+				<h2>アカウント情報変更</h2>
+				<div class="form-group">
+					<label for="userId">ユーザID</label>
+					<input type="text" class="form-control" id="userId" name="userId" th:value="${user.userId}"
+						disabled>
+				</div>
+				<div class="form-group">
+					<label for="userName">ユーザ名</label>
+					<input type="text" class="form-control" id="userName" name="userName" th:value="${user.userName}">
+				</div>
+				<div class="form-group">
+					<label for="adminFlg">管理者権限</label>
+					<select id="adminFlg" class="form-control">
+						<option value="0" selected>なし</option>
+						<option value="1">あり</option>
+					</select>
+				</div>
+				<button type="submit" class="btn btn-primary">
+					<div class="mx-2">
+						編集
+					</div>
+				</button>
+			</form>
+		</div>
+
+		<div>
+			<hr>
+			<form method="post" th:action="@{/resetPassWord}">
+				<h2>パスワード初期化</h2>
+				<button type="submit" class="btn btn-primary">
+					<div class="mx-2">
+						初期化
+					</div>
+				</button>
+			</form>
+		</div>
+	</div>
+
+</body>
+
+</html>
