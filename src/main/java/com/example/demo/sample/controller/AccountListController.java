@@ -42,11 +42,22 @@ public class AccountListController {
 	}
 
 	@PostMapping(path = "/goEditAccount")
-	public String goEditAccount(RedirectAttributes redirectAttribute, Model model,
+	public String goEditAccount(HttpServletRequest request, RedirectAttributes redirectAttribute, Model model,
 			@RequestParam("editUserId") String editUserId) {
 		redirectAttribute.addAttribute("userId", editUserId);
+		Session.setErrorMessage(request, null);
 		return "redirect:sample/editAccount";
 	}
 
 	//TODO deleteAccount用コントローラ作成……クライアント側からuser_idを受け取りuser_idをキーにuser_mstから削除する
+	@PostMapping(path = "/deleteAccount")
+	public String deleteAccount(HttpServletRequest request, Model model,
+			@RequestParam("deleteUserId") String deleteUserId) {
+		if (Session.getUser(request).getUserId().equals(deleteUserId)) {
+			Session.setErrorMessage(request, "現在ログイン中のユーザと同一ユーザです。削除できません。");
+			return "redirect:sample/accountList";
+		}
+		Session.setErrorMessage(request, null);
+		return "redirect:sample/accountList";
+	}
 }
