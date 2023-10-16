@@ -5,23 +5,12 @@
 	<title>アカウント一覧</title>
 	<meta charset="utf-8" />
 	<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
-	<script type="javascript/text" th:src="@{/js/accountList.js}"></script>
-	<script th:src="@{/webjars/jquery/jquery.min.js}" defer></script>
-	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" defer></script>
+	<script type="text/javascript" th:src="@{/js/accountList.js}"></script>
+	<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}" defer></script>
+	<script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" defer></script>
 </head>
 
 <body>
-	<script>
-		$('#deleteAlert').on('show.bs.modal', function (event) {
-			let button = $(event.relatedTarget); //モーダルを呼び出すときに使われたボタンを取得
-			let recipient = button.data('whatever'); //data-whatever の値を取得
-
-			//Ajaxの処理はここに
-
-			let modal = $(this);  //モーダルを取得
-			modal.find('.modal-footer input#deleteUserId').val(recipient); //inputタグにも表示
-		})
-	</script>
 	<div class="container-fluid">
 		<h1>アカウント一覧</h1>
 		<div class="alert alert-danger" role="alert" th:if="${errorMessage != null}" th:text="${errorMessage}" />
@@ -85,7 +74,7 @@
 							</form>
 						</td>
 						<td>
-							<button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#deleteAlert" data-whatever="${user.userId}">
+							<button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#deleteAlert" th:data-whatever="${user.userId}">
 								<div class="mx-2">
 									削除
 								</div>
