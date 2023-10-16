@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>個人設定</title>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+	<script type="text/javascript" th:src="@{/js/personalSetting.js}"></script>
+	<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}" defer></script>
+	<script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" defer></script>
+</head>
+
+<body>
+
+	<div class="container-fluid">
+		<h1>個人設定</h1>
+		<div class="alert alert-danger" role="alert" th:if="${errorMessage != null}" th:text="${errorMessage}" />
+		<div class="alert alert-success" role="alert" th:if="${successMessage != null}" th:text="${successMessage}" />
+		<div class='btn-toolbar' role="toolbar" style="margin:20px 0px;">
+			<form method="get" th:action="@{/sample/menu}">
+				<div class="btn-group mr-3" role="group">
+					<button type="submit" class="btn btn-primary">
+						<div class="mx-2">
+							メニューへ戻る
+						</div>
+					</button>
+				</div>
+			</form>
+		</div>
+		<div>
+			<hr>
+			<h2>アカウント情報変更</h2>
+			<form method="post" th:action="@{/updateName}">
+				<div class="form-group">
+					<label for="userId">ユーザID</label>
+					<p th:text="${user.userId}"/>
+				</div>
+				<div class="form-group">
+					<label for="userName">ユーザ名</label>
+					<input type="text" class="form-control" id="userName" name="userName" th:value="${user.userName}">
+				</div>
+				<button type="submit" class="btn btn-primary">
+					<div class="mx-2">
+						更新
+					</div>
+				</button>
+			</form>
+		</div>
+
+		<div>
+			<hr>
+			<h2>パスワード変更</h2>
+			<div class="form-group">
+				<label for="oldPassword">現在のパスワード</label>
+				<input type="password" class="form-control" id="oldPassword" name="oldPassword">
+			</div>
+			<div class="form-group">
+				<label for="newPassword">新しいパスワード</label>
+				<input type="password" class="form-control" id="newPassword" name="newPassword">
+			</div>
+			<div class="form-group">
+				<label for="newPassword2">新しいパスワード（再入力）</label>
+				<input type="password" class="form-control" id="newPassword2" name="newPassword2">
+			</div>
+			<button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#updatePasswordAlert">
+				<div class="mx-2">
+					パスワード変更
+				</div>
+			</button>
+		</div>
+	</div>
+
+	<!-- ボタン・リンククリック後に表示される画面の内容 -->
+	<div class="modal fade" id="updatePasswordAlert" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="myModalLabel">パスワード変更確認画面</h4>
+				</div>
+				<div class="modal-body">
+					<label>パスワードを変更しますか？</label>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+					<form method="post" th:action="@{/updatePassword}">
+						<button type="submit" class="btn btn-primary">変更</button>
+						<input type="hidden" id="hiddenOldPassword" name="hiddenOldPassword">
+						<input type="hidden" id="hiddenNewPassword" name="hiddenNewPassword">
+						<input type="hidden" id="hiddenNewPassword2" name="hiddenNewPassword2">
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+
+</html>

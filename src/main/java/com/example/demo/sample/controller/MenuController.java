@@ -30,4 +30,10 @@ public class MenuController {
 		Session.setErrorMessage(request, null);
 		return "redirect:sample/accountList";
 	}
+	
+	@PostMapping(path = "/goPersonalSetting")
+	public String goPersonalSetting(HttpServletRequest request) {
+		Session.setErrorMessage(request, null);
+		return "redirect:sample/personalSetting";
+	}
 }

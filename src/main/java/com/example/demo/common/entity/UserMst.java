@@ -82,4 +82,18 @@ public class UserMst {
 		this.createDateTime = createDateTime;
 		this.updateDateTime = updateDateTime;
 	}
+	
+	/**
+	 * ユーザ名設定インスタンス
+	 * @param userId ユーザID
+	 * @param userName ユーザ名
+	 * @param updateDateTime 更新日付
+	 * @return
+	 */
+	public UserMst setUpdateUserName(String userId,String userName, Date updateDateTime) {
+		this.userId = userId;
+		this.userName = userName;
+		this.updateDateTime = updateDateTime;
+		return this;
+	}
 }

@@ -25,16 +25,24 @@
 		<div>
 			<hr>
 			<h2>一般メニュー</h2>
-			<button type="submit" class="btn btn-primary">
-				<div class="mx-2">
-					機能1
+			<div class='btn-toolbar' role="toolbar" style="margin:20px 0px;">
+				<div class="btn-group mr-3" role="group">
+					<button type="submit" class="btn btn-primary">
+						<div class="mx-2">
+							機能1
+						</div>
+					</button>
 				</div>
-			</button>
-			<button type="submit" class="btn btn-primary">
-				<div class="mx-2">
-					機能2
-				</div>
-			</button>
+				<form method="post" th:action="@{/goPersonalSetting}">
+					<div class="btn-group mr-3" role="group">
+						<button type="submit" class="btn btn-primary">
+							<div class="mx-2">
+								個人設定
+							</div>
+						</button>
+					</div>
+				</form>
+			</div>
 		</div>
 	</div>
 </body>

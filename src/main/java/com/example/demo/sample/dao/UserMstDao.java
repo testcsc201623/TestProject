@@ -23,6 +23,9 @@ public interface UserMstDao {
 	@Insert
 	int createUser(UserMst userMst);
 
+	@Update(include = { "userName", "updateDateTime" })
+	int updateUserName(UserMst userMst);
+	
 	@Update(include = { "password", "updateDateTime" })
 	int updatePassword(UserMst userMst);
 
