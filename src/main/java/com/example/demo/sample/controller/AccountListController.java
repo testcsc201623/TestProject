@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.example.demo.common.entity.UserMst;
 import com.example.demo.common.model.Session;
 import com.example.demo.sample.dao.UserMstDao;
 
@@ -30,6 +31,10 @@ public class AccountListController {
 			model.addAttribute("errorMessage", Session.getErrorMessage(request));
 			Session.setErrorMessage(request, null);
 		}
+		if(Session.getSuccessMessage(request) != null) {
+			model.addAttribute("successMessage", Session.getSuccessMessage(request));
+			Session.setSuccessMessage(request, null);
+		}
 		model.addAttribute("userList", userMstDao.selectAll());
 		return "sample/accountList";
 	}
@@ -49,13 +54,18 @@ public class AccountListController {
 		return "redirect:sample/editAccount";
 	}
 
-	//TODO deleteAccount用コントローラ作成……クライアント側からuser_idを受け取りuser_idをキーにuser_mstから削除する
 	@PostMapping(path = "/deleteAccount")
 	public String deleteAccount(HttpServletRequest request, Model model,
 			@RequestParam("deleteUserId") String deleteUserId) {
 		if (Session.getUser(request).getUserId().equals(deleteUserId)) {
 			Session.setErrorMessage(request, "現在ログイン中のユーザと同一ユーザです。削除できません。");
 			return "redirect:sample/accountList";
+		}
+		var deleteUserMst = new UserMst();
+		deleteUserMst.setUserId(deleteUserId);
+		var deleteResult = userMstDao.deleteUser(deleteUserMst);
+		if(deleteResult == 1) {
+			Session.setSuccessMessage(request, "ユーザID：" + deleteUserId + "を削除しました。");
 		}
 		Session.setErrorMessage(request, null);
 		return "redirect:sample/accountList";

@@ -19,4 +19,12 @@ public class Session {
     public static void setErrorMessage(HttpServletRequest request, String errorMessage) {
         request.getSession().setAttribute("errorMessage", errorMessage);
     }
+    
+    public static String getSuccessMessage(HttpServletRequest request) {
+        return (String) request.getSession().getAttribute("successMessage");
+    }
+ 
+    public static void setSuccessMessage(HttpServletRequest request, String successMessage) {
+        request.getSession().setAttribute("successMessage", successMessage);
+    }
 }
