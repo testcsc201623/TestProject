@@ -37,6 +37,32 @@ public class UserMst {
 	 */
 	public UserMst() {
 	}
+	
+	/**
+	 * コンストラクタ
+	 * @param userId ユーザID
+	 * @param password パスワード
+	 * @param updateDateTime 更新日付
+	 */
+	public UserMst(String userId,String password, Date updateDateTime) {
+		this.userId = userId;
+		this.password = password;
+		this.updateDateTime = updateDateTime;
+	}
+	
+	/**
+	 * コンストラクタ
+	 * @param userId ユーザID
+	 * @param userName ユーザ名
+	 * @param adminFlg 管理者フラグ
+	 * @param updateDateTime 更新日付
+	 */
+	public UserMst(String userId,String userName, int adminFlg, Date updateDateTime) {
+		this.userId = userId;
+		this.userName = userName;
+		this.adminFlg = adminFlg;
+		this.updateDateTime = updateDateTime;
+	}
 
 	/**
 	 * コンストラクタ

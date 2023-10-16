@@ -5,6 +5,8 @@
 	<title>アカウント編集</title>
 	<meta charset="utf-8" />
 	<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+	<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}" defer></script>
+	<script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" defer></script>
 </head>
 
 <body>
@@ -12,6 +14,7 @@
 	<div class="container-fluid">
 		<h1>アカウント編集</h1>
 		<div class="alert alert-danger" role="alert" th:if="${errorMessage != null}" th:text="${errorMessage}" />
+		<div class="alert alert-success" role="alert" th:if="${successMessage != null}" th:text="${successMessage}" />
 		<div class='btn-toolbar' role="toolbar" style="margin:20px 0px;">
 			<form method="get" th:action="@{/sample/menu}">
 				<div class="btn-group mr-3" role="group">
@@ -61,14 +64,34 @@
 
 		<div>
 			<hr>
-			<form method="post" th:action="@{/resetPassWord}">
-				<h2>パスワード初期化</h2>
-				<button type="submit" class="btn btn-primary">
-					<div class="mx-2">
-						初期化
-					</div>
-				</button>
-			</form>
+			<h2>パスワード初期化</h2>
+			<button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#resetPasswordAlert">
+				<div class="mx-2">
+					初期化
+				</div>
+			</button>
+		</div>
+	</div>
+
+	<!-- ボタン・リンククリック後に表示される画面の内容 -->
+	<div class="modal fade" id="resetPasswordAlert" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="myModalLabel">パスワード初期化確認画面</h4>
+				</div>
+				<div class="modal-body">
+					<label>パスワードを初期化しますか？</label>
+					<label>※初期化するとパスワードはIDと同一となります。</label>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+					<form method="post" th:action="@{/resetPassWord}">
+						<button type="submit" class="btn btn-primary">初期化</button>
+						<input type="hidden" id="resetPasswordUserId" name="resetPasswordUserId" th:value="${user.userId}">
+					</form>
+				</div>
+			</div>
 		</div>
 	</div>
 
