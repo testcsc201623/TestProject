@@ -32,7 +32,7 @@ public class LoginController {
 	}
 	
   @PostMapping(path = "/login")
-  public String login(HttpServletRequest request, Model model, @RequestParam("userId") String userId, @RequestParam("password") String password) throws NoSuchAlgorithmException{
+  public String login(HttpServletRequest request, @RequestParam("userId") String userId, @RequestParam("password") String password) throws NoSuchAlgorithmException{
       var resultUser = userMstDao.selectUser(userId);
       request.changeSessionId();
       if(resultUser.size() != 1 || !isValidPassword(resultUser.get(0).getPassword(),password)){

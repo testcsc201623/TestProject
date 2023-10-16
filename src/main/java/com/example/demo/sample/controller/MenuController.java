@@ -26,7 +26,7 @@ public class MenuController {
 	}
 
 	@PostMapping(path = "/goAccountList")
-	public String goAccountList(HttpServletRequest request, Model model) {
+	public String goAccountList(HttpServletRequest request) {
 		Session.setErrorMessage(request, null);
 		return "redirect:sample/accountList";
 	}

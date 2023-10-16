@@ -44,7 +44,7 @@ public class AccountListController {
 	}
 
 	@PostMapping(path = "/createAccount")
-	public String createAccount(HttpServletRequest request, Model model, @RequestParam("userId") String userId,
+	public String createAccount(HttpServletRequest request, @RequestParam("userId") String userId,
 			@RequestParam("userName") String userName, @RequestParam("adminFlg") int adminFlg)
 			throws NoSuchAlgorithmException {
 		if (userMstDao.selectUser(userId).size() == 1) {
@@ -65,7 +65,7 @@ public class AccountListController {
 	}
 
 	@PostMapping(path = "/goEditAccount")
-	public String goEditAccount(HttpServletRequest request, RedirectAttributes redirectAttribute, Model model,
+	public String goEditAccount(HttpServletRequest request, RedirectAttributes redirectAttribute,
 			@RequestParam("editUserId") String editUserId) {
 		redirectAttribute.addAttribute("userId", editUserId);
 		Session.setErrorMessage(request, null);
@@ -73,7 +73,7 @@ public class AccountListController {
 	}
 
 	@PostMapping(path = "/deleteAccount")
-	public String deleteAccount(HttpServletRequest request, Model model,
+	public String deleteAccount(HttpServletRequest request,
 			@RequestParam("deleteUserId") String deleteUserId) {
 		if (Session.getUser(request).getUserId().equals(deleteUserId)) {
 			Session.setErrorMessage(request, "現在ログイン中のユーザと同一ユーザです。削除できません。");
