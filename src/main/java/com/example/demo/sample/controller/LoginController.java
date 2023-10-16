@@ -1,7 +1,5 @@
 package com.example.demo.sample.controller;
 
-import java.math.BigInteger;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.example.demo.common.Constant;
+import com.example.demo.common.logic.HashLogic;
 import com.example.demo.common.model.Session;
 import com.example.demo.sample.dao.UserMstDao;
 
@@ -47,8 +45,6 @@ public class LoginController {
   }
 	
 	private boolean isValidPassword(String registeredPassword, String inputPassword) throws NoSuchAlgorithmException{
-        var inputPasswordByteArray = MessageDigest.getInstance("SHA-256").digest((inputPassword + Constant.SALT).getBytes());
-        var inputPasswordHash = String.format("%040x", new BigInteger(1, inputPasswordByteArray));
-        return registeredPassword.equals(inputPasswordHash);
+        return registeredPassword.equals(HashLogic.getHash(inputPassword));
     }
 }

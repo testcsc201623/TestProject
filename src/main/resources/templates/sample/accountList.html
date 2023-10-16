@@ -39,22 +39,20 @@
 							<input type="text" class="form-control" id="userId" name="userId">
 						</td>
 						<td>
-							<input type="password" class="form-control" id="password" name="password">
+							<input type="text" class="form-control" id="userName" name="userName">
 						</td>
 						<td>
-							<select id="adminFlg" class="form-control">
+							<select id="adminFlg" name="adminFlg" class="form-control">
 								<option value="0" selected>なし</option>
 								<option value="1">あり</option>
 							</select>
 						</td>
 						<td>
-							<form method="post" th:action="@{/createAccount}">
-								<button type="submit" class="btn btn-primary">
-									<div class="mx-2">
-										作成
-									</div>
-								</button>
-							</form>
+							<button type="submit" class="btn btn-primary">
+								<div class="mx-2">
+									作成
+								</div>
+							</button>
 						</td>
 					</form>
 				</tr>
