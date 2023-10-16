@@ -37,11 +37,11 @@
 		</div>
 		<div>
 			<hr>
-			<form method="post" th:action="@{/editAccount}">
-				<h2>アカウント情報変更</h2>
+			<h2>アカウント情報変更</h2>
+			<form method="post" th:action="@{/updateAccount}">
 				<div class="form-group">
 					<label for="userId">ユーザID</label>
-					<input type="text" class="form-control" id="userId" name="userId" th:value="${user.userId}" disabled>
+					<input type="text" class="form-control" id="userId" name="userId" th:value="${user.userId}" readonly="readonly">
 				</div>
 				<div class="form-group">
 					<label for="userName">ユーザ名</label>
@@ -49,9 +49,9 @@
 				</div>
 				<div class="form-group">
 					<label for="adminFlg">管理者権限</label>
-					<select id="adminFlg" class="form-control">
-						<option value="0" selected>なし</option>
-						<option value="1">あり</option>
+					<select id="adminFlg" name="adminFlg" class="form-control">
+						<option value="0" th:selected="${user.adminFlg == 0}">なし</option>
+						<option value="1" th:selected="${user.adminFlg == 1}">あり</option>
 					</select>
 				</div>
 				<button type="submit" class="btn btn-primary">

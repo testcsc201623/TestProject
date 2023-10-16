@@ -48,8 +48,10 @@ public class EditAccountController {
 			@RequestParam("userId") String userId, @RequestParam("userName") String userName,
 			@RequestParam("adminFlg") int adminFlg)
 			throws NoSuchAlgorithmException {
-		if (Session.getUser(request).getAdminFlg() == 1 && adminFlg == 0) {
+		// 編集しようとしているユーザがログインユーザでかつ管理者権限を一般権限に変更する場合はエラーを表示する
+		if (Session.getUser(request).getUserId().equals(userId) && Session.getUser(request).getAdminFlg() == 1 && adminFlg == 0) {
 			Session.setErrorMessage(request, "管理者権限をもつログインユーザID：" + userId + "の管理者権限を変更することはできません。");
+			redirectAttribute.addAttribute("userId", userId);
 			return "redirect:sample/editAccount";
 		}
 		if (userMstDao.updateUser(
