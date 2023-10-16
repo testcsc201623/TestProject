@@ -45,6 +45,8 @@ public class PersonalSettingController {
 			throws NoSuchAlgorithmException {
 		var userId = Session.getUser(request).getUserId();
 		if (userMstDao.updateUserName(new UserMst().setUpdateUserName(userId, userName, new Date())) == 1) {
+			// 変更したアカウント情報をセッションに再設定
+			Session.setUser(request, userMstDao.selectUser(userId).get(0));
 			Session.setSuccessMessage(request, "ユーザID：" + userId + "の情報を更新しました。");
 			Session.setErrorMessage(request, null);
 			return "redirect:sample/personalSetting";
@@ -66,7 +68,7 @@ public class PersonalSettingController {
 			Session.setErrorMessage(request, "現在のパスワードに誤りがあります。");
 			return "redirect:sample/personalSetting";
 		}
-		if(hiddenNewPassword.isBlank() || hiddenNewPassword.length() < 4) {
+		if (hiddenNewPassword.isBlank() || hiddenNewPassword.length() < 4) {
 			Session.setErrorMessage(request, "新しいパスワードは4文字以上入力してください。");
 			return "redirect:sample/personalSetting";
 		}
@@ -79,6 +81,8 @@ public class PersonalSettingController {
 						userId,
 						HashLogic.getHash(hiddenNewPassword),
 						new Date())) == 1) {
+			// 変更したアカウント情報をセッションに再設定
+			Session.setUser(request, userMstDao.selectUser(userId).get(0));
 			Session.setSuccessMessage(request, "パスワードを変更しました。");
 			Session.setErrorMessage(request, null);
 			return "redirect:sample/personalSetting";

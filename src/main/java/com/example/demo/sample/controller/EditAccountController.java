@@ -49,7 +49,8 @@ public class EditAccountController {
 			@RequestParam("adminFlg") int adminFlg)
 			throws NoSuchAlgorithmException {
 		// 編集しようとしているユーザがログインユーザでかつ管理者権限を一般権限に変更する場合はエラーを表示する
-		if (Session.getUser(request).getUserId().equals(userId) && Session.getUser(request).getAdminFlg() == 1 && adminFlg == 0) {
+		if (Session.getUser(request).getUserId().equals(userId) && Session.getUser(request).getAdminFlg() == 1
+				&& adminFlg == 0) {
 			Session.setErrorMessage(request, "管理者権限をもつログインユーザID：" + userId + "の管理者権限を変更することはできません。");
 			redirectAttribute.addAttribute("userId", userId);
 			return "redirect:sample/editAccount";
@@ -59,6 +60,11 @@ public class EditAccountController {
 						userName,
 						adminFlg,
 						new Date())) == 1) {
+			// 変更したパスワードがログインユーザだった場合、セッション情報を再設定
+			if (userId.equals(Session.getUser(request).getUserId())) {
+				// 変更したアカウント情報をセッションに再設定
+				Session.setUser(request, userMstDao.selectUser(userId).get(0));
+			}
 			Session.setSuccessMessage(request, "ユーザID：" + userId + "の情報を更新しました。");
 			Session.setErrorMessage(request, null);
 			redirectAttribute.addAttribute("userId", userId);
@@ -79,6 +85,11 @@ public class EditAccountController {
 						resetPasswordUserId,
 						HashLogic.getHash(resetPasswordUserId),
 						new Date())) == 1) {
+			// 変更したパスワードがログインユーザだった場合、セッション情報を再設定
+			if (resetPasswordUserId.equals(Session.getUser(request).getUserId())) {
+				// 変更したアカウント情報をセッションに再設定
+				Session.setUser(request, userMstDao.selectUser(resetPasswordUserId).get(0));
+			}
 			Session.setSuccessMessage(request, "ユーザID：" + resetPasswordUserId + "のパスワードを初期化しました。");
 			Session.setErrorMessage(request, null);
 			redirectAttribute.addAttribute("userId", resetPasswordUserId);
