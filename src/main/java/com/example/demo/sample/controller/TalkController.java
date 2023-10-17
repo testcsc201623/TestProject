@@ -27,6 +27,7 @@ public class TalkController {
 			model.addAttribute("errorMessage", Session.getErrorMessage(request));
 			Session.setErrorMessage(request, null);
 		}
+		//TODO テーブルを内部結合させてユーザ名を画面表示させる
 		model.addAttribute("threadTblList", threadTblDao.selectAll());
 		model.addAttribute("user", Session.getUser(request));
 		return "sample/talk";
@@ -36,6 +37,7 @@ public class TalkController {
 	@SendTo("/receive/message")
 	public Message send(Message message) throws Exception {
 		Thread.sleep(1000);
+		//TODO 送信された情報のDB登録
 		return new Message(HtmlUtils.htmlEscape(message.getName()), HtmlUtils.htmlEscape(message.getStatement()));
 	}
 }
