@@ -30,6 +30,12 @@ public class MenuController {
 		Session.setErrorMessage(request, null);
 		return "redirect:sample/accountList";
 	}
+	
+	@PostMapping(path = "/goTalk")
+	public String goTalk(HttpServletRequest request) {
+		Session.setErrorMessage(request, null);
+		return "redirect:sample/talk";
+	}
 
 	@PostMapping(path = "/goPersonalSetting")
 	public String goPersonalSetting(HttpServletRequest request) {

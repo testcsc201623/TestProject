@@ -26,13 +26,15 @@
 			<hr>
 			<h2>一般メニュー</h2>
 			<div class='btn-toolbar' role="toolbar" style="margin:20px 0px;">
-				<div class="btn-group mr-3" role="group">
-					<button type="submit" class="btn btn-primary">
-						<div class="mx-2">
-							機能1
-						</div>
-					</button>
-				</div>
+				<form method="post" th:action="@{/goTalk}">
+					<div class="btn-group mr-3" role="group">
+						<button type="submit" class="btn btn-primary">
+							<div class="mx-2">
+								トーク
+							</div>
+						</button>
+					</div>
+				</form>
 				<form method="post" th:action="@{/goPersonalSetting}">
 					<div class="btn-group mr-3" role="group">
 						<button type="submit" class="btn btn-primary">
