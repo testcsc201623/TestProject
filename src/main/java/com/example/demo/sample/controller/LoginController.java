@@ -19,32 +19,33 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Controller
 public class LoginController {
-	
+
 	private final UserMstDao userMstDao;
-	
+
 	@GetMapping(path = "/sample/login")
-	public String loginPage(HttpServletRequest request, Model model){
-        if(Session.getErrorMessage(request) != null) {
-            model.addAttribute("errorMessage", Session.getErrorMessage(request));
-            Session.setErrorMessage(request, null);
-        }
+	public String loginPage(HttpServletRequest request, Model model) {
+		if (Session.getErrorMessage(request) != null) {
+			model.addAttribute("errorMessage", Session.getErrorMessage(request));
+			Session.setErrorMessage(request, null);
+		}
 		return "sample/login";
 	}
-	
-  @PostMapping(path = "/login")
-  public String login(HttpServletRequest request, @RequestParam("userId") String userId, @RequestParam("password") String password) throws NoSuchAlgorithmException{
-      var resultUser = userMstDao.selectUser(userId);
-      request.changeSessionId();
-      if(resultUser.size() != 1 || !isValidPassword(resultUser.get(0).getPassword(),password)){
-          Session.setErrorMessage(request, "ログインに失敗しました。");
-          return "redirect:sample/login";
-      }
-      Session.setErrorMessage(request, null);
-      Session.setUser(request, resultUser.get(0));
-      return "redirect:sample/menu";
-  }
-	
-	private boolean isValidPassword(String registeredPassword, String inputPassword) throws NoSuchAlgorithmException{
-        return registeredPassword.equals(HashLogic.getHash(inputPassword));
-    }
+
+	@PostMapping(path = "/login")
+	public String login(HttpServletRequest request, @RequestParam("userId") String userId,
+			@RequestParam("password") String password) throws NoSuchAlgorithmException {
+		var resultUser = userMstDao.selectUser(userId);
+		request.changeSessionId();
+		if (resultUser.size() != 1 || !isValidPassword(resultUser.get(0).getPassword(), password)) {
+			Session.setErrorMessage(request, "ログインに失敗しました。");
+			return "redirect:sample/login";
+		}
+		Session.setErrorMessage(request, null);
+		Session.setUser(request, resultUser.get(0));
+		return "redirect:sample/menu";
+	}
+
+	private boolean isValidPassword(String registeredPassword, String inputPassword) throws NoSuchAlgorithmException {
+		return registeredPassword.equals(HashLogic.getHash(inputPassword));
+	}
 }
