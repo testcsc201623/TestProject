@@ -2,3 +2,4 @@ insert into user_mst (user_id, password, user_name, admin_flg, create_date_time,
 insert into user_mst (user_id, password, user_name, admin_flg, create_date_time, update_date_time) values ('ippan', '8c6bc9b755cedb116b94bccfe042f30a634196c93dcac85d60de74a8fb9e434', '一般', 0,'2021-09-22 09:00:00', '2021-07-13 09:00:00');
 insert into title_tbl(title_id, title, create_user_id, create_date_time, update_date_time) values (1,'FUKUCHAN部屋','suehiro','2021-08-01 09:00:00', '2021-08-13 12:00:00');
 insert into thread_tbl(title_id, message_number, user_id, comment, create_date_time, update_date_time) values (1, 1,'suehiro', 'testTEST(・Д・)', '2021-09-22 09:00:00', '2021-08-25 12:00:00');
+insert into thread_tbl(title_id, message_number, user_id, comment, create_date_time, update_date_time) values (1, 2,'ippan', '一般アカです', '2021-09-22 09:00:00', '2021-08-25 12:00:00');

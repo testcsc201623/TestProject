@@ -46,7 +46,7 @@ function showMessage(message) {
 }
 
 window.addEventListener('DOMContentLoaded', function() {
-	$("form").on('submit', function(e) {
+	$("#sendMessage").on('submit', function(e) {
 		e.preventDefault();
 	});
 	$("#connect").click(function() {
