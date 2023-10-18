@@ -33,6 +33,7 @@ function disconnect() {
 }
 
 function sendMessage() {
+	window.sessionStorage.getItem(['user']);
 	// /send/messageエンドポイントにメッセージを送信する
 	stompClient.send("/send/message", {}, JSON.stringify(
 		{ 'name': $("#name").val(), 'statement': $("#statement").val() }));

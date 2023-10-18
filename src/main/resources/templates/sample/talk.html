@@ -33,6 +33,17 @@
 			<button id="connect" type="submit" class="btn btn-primary">接続</button>
 			<button id="disconnect" type="submit" class="btn btn-danger" disabled="disabled">切断</button>
 		</div>
+		<table>
+			<th:block th:each="response : ${responseList}">
+				<tbody>
+					<tr>
+						<td th:text="|${response.userName}: ${response.comment}|" />
+					</tr>
+				</tbody>
+			</th:block>
+			<tbody id="message">
+			</tbody>
+		</table>
 		<form id="sendMessage">
 			<div class="form-group">
 				<label for="name">名前</label>
@@ -48,17 +59,6 @@
 				</div>
 			</button>
 		</form>
-		<table>
-			<tbody id="message">
-			</tbody>
-			<th:block th:each="response : ${responseList}">
-				<tbody>
-					<tr>
-						<td th:text="|${response.userName}: ${response.comment}|" />
-					</tr>
-				</tbody>
-			</th:block>
-		</table>
 	</div>
 </body>
 

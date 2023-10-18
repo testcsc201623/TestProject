@@ -11,4 +11,4 @@ inner join
 on
 	thread_tbl.user_id = user_mst.user_id
 order by
-	thread_tbl.message_number DESC
+	thread_tbl.message_number

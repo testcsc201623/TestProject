@@ -36,7 +36,7 @@ public class TalkController {
 	@SendTo("/receive/message")
 	public Message send(Message message) throws Exception {
 		Thread.sleep(1000);
-		//TODO 送信された情報のDB登録
+		//TODO user_idをセッションから取得し、送信された情報のDB登録
 		return new Message(HtmlUtils.htmlEscape(message.getName()), HtmlUtils.htmlEscape(message.getStatement()));
 	}
 }
