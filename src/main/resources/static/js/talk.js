@@ -127,7 +127,7 @@ function scrollBottom() {
  */
 function changeMainAreaHeight() {
 	let paddingBottomHeight = $('#footer_area').height() +10;
-	$("#main").css({
+	$("#messageArea").css({
 		'padding-bottom': paddingBottomHeight + `px`,
 	});
 }

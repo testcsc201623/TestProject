@@ -15,7 +15,7 @@
 
 <body class="fixed-menu-body">
 	<div class="container-fluid">
-		<div class="fixed-menu">
+		<div class="fixed-header">
 			<h1>トーク</h1>
 			<div class="alert alert-danger" role="alert" th:if="${errorMessage != null}" th:text="${errorMessage}" />
 			<div class="alert alert-success" role="alert" th:if="${successMessage != null}"
@@ -37,7 +37,7 @@
 				<button id="disconnect" type="submit" class="btn btn-danger" disabled="disabled">切断</button>
 			</div>
 		</div>
-		<div id="main">
+		<div id="messageArea">
 			<table>
 				<tbody>
 					<th:block th:each="response : ${responseList}">
