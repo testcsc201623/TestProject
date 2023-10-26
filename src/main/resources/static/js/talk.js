@@ -45,11 +45,13 @@ function disconnect() {
  * メッセージをバック側に送信します。
  */
 function sendMessage() {
-	window.sessionStorage.getItem(['user']);
-	// /send/messageエンドポイントにメッセージを送信する
-	stompClient.send("/send/message", {}, JSON.stringify(
-		{ 'id': $("#userId").val(), 'name': $("#userName").val(), 'statement': $("#statement").val() }));
-	$("#statement").val('');
+	if ($("#statement").val().length > 0) {
+		window.sessionStorage.getItem(['user']);
+		// /send/messageエンドポイントにメッセージを送信する
+		stompClient.send("/send/message", {}, JSON.stringify(
+			{ 'id': $("#userId").val(), 'name': $("#userName").val(), 'statement': $("#statement").val() }));
+		$("#statement").val('');
+	}
 }
 
 /**
@@ -58,12 +60,20 @@ function sendMessage() {
 function showMessage(message) {
 	// 受信したメッセージを整形して表示
 	$("#message").append(
-		"<tr><td>" + message.name + ": " + message.statement + "</td></tr>");
-	// 表示後、スクロールバーを一番下に下げる
+		"<tr><td class=\"user-name-font\">" + message.name + "</td></tr><tr><td> " + message.statement.replace(/\n/g, '<br>') + "</td></tr>");
+	// 表示後、メッセージエリア、メッセージ入力ボックスのサイズ調整とスクロールの位置調整を実施する
+	$("#statement").css({
+		'height': `auto`,           // 1camelCase形式で指定
+	});
+	changeMainAreaHeight();
 	scrollBottom();
 }
 
 window.addEventListener('DOMContentLoaded', function() {
+
+	// textareaタグを全て取得
+	const textareaEls = document.querySelectorAll("textarea");
+
 	$("#sendMessage").on('submit', function(e) {
 		e.preventDefault();
 	});
@@ -76,10 +86,27 @@ window.addEventListener('DOMContentLoaded', function() {
 	$("#send").click(function() {
 		sendMessage();
 	});
-	
-	$(document).ready( function(){
+
+	$(document).ready(function() {
+		changeMainAreaHeight();
 		scrollBottom();
 	});
+
+	textareaEls.forEach((textareaEl) => {
+		// デフォルト値としてスタイル属性を付与
+		textareaEl.setAttribute("style", `height: ${textareaEl.scrollHeight}px;`);
+		// inputイベントが発生するたびに関数呼び出し
+		textareaEl.addEventListener("input", setTextareaHeight);
+	});
+
+	// textareaの高さを計算して指定する関数
+	function setTextareaHeight() {
+		this.style.height = "auto";
+		this.style.height = `${this.scrollHeight}px`;
+		changeMainAreaHeight();
+		scrollBottom();
+	}
+
 });
 
 setTimeout("connect()", 3000);
@@ -87,11 +114,20 @@ setTimeout("connect()", 3000);
 /**
  * ページの一番下までスクロールします。
  */
-function scrollBottom(){
-  let elm = document.documentElement;
-  // scrollHeight ページの高さ clientHeight ブラウザの高さ
-  let bottom = elm.scrollHeight - elm.clientHeight;
-  // 垂直方向へ移動
-  window.scroll(0, bottom);
+function scrollBottom() {
+	let elm = document.documentElement;
+	// scrollHeight ページの高さ clientHeight ブラウザの高さ
+	let bottom = elm.scrollHeight - elm.clientHeight;
+	// 垂直方向へ移動
+	window.scroll(0, bottom);
+}
 
+/**
+ * メインエリアの下マージンをフッターの高さによって変更する
+ */
+function changeMainAreaHeight() {
+	let paddingBottomHeight = $('#footer_area').height() +10;
+	$("#main").css({
+		'padding-bottom': paddingBottomHeight + `px`,
+	});
 }

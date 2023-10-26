@@ -37,26 +37,37 @@
 				<button id="disconnect" type="submit" class="btn btn-danger" disabled="disabled">切断</button>
 			</div>
 		</div>
-		<div class="main">
+		<div id="main">
 			<table>
-				<th:block th:each="response : ${responseList}">
-					<tbody>
+				<tbody>
+					<th:block th:each="response : ${responseList}">
 						<tr>
-							<td th:text="|${response.userName}: ${response.comment}|" />
+							<td class="user-name-font" th:text="${response.userName}" />
 						</tr>
-					</tbody>
-				</th:block>
+						<tr>
+							<td>
+								<th:block th:if="${response.comment}">
+									<th:block th:each="str, stat : ${response.comment.split('\r\n|\r|\n', -1)}">
+										<th:block th:text="${str}" />
+										<br th:if="${!stat.last}" />
+									</th:block>
+								</th:block>
+							</td>
+						</tr>
+
+					</th:block>
+				</tbody>
 				<tbody id="message">
 				</tbody>
 			</table>
 		</div>
-		<div class="footer_area">
+		<div id="footer_area">
 			<form id="sendMessage">
 				<input type="hidden" id="userId" th:value="${user.userId}">
 				<input type="hidden" id="userName" th:value="${user.userName}">
 				<div class="form-group">
 					<label for="statement">メッセージ</label>
-					<input type="text" class="form-control" id="statement" placeholder="Your Message">
+					<textarea class="form-control" id="statement" rows="1"></textarea>
 				</div>
 				<button id="send" type="submit" class="btn btn-primary">
 					<div class="mx-2">
