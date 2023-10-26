@@ -1,5 +1,8 @@
-var stompClient = null;
+let stompClient = null;
 
+/**
+ * 接続状況を設定します。
+ */
 function setConnected(connected) {
 	$("#connect").prop("disabled", connected);
 	$("#disconnect").prop("disabled", !connected);
@@ -11,6 +14,9 @@ function setConnected(connected) {
 	$("#message").html("");
 }
 
+/**
+ * 通信を接続します。
+ */
 function connect() {
 	var socket = new SockJS('/websocket'); // WebSocket通信開始
 	stompClient = Stomp.over(socket);
@@ -24,6 +30,9 @@ function connect() {
 	});
 }
 
+/**
+ * 通信を切断します。
+ */
 function disconnect() {
 	if (stompClient !== null) {
 		stompClient.disconnect();
@@ -32,18 +41,26 @@ function disconnect() {
 	console.log("Disconnected");
 }
 
+/**
+ * メッセージをバック側に送信します。
+ */
 function sendMessage() {
 	window.sessionStorage.getItem(['user']);
 	// /send/messageエンドポイントにメッセージを送信する
 	stompClient.send("/send/message", {}, JSON.stringify(
-		{ 'name': $("#name").val(), 'statement': $("#statement").val() }));
+		{ 'id': $("#userId").val(), 'name': $("#userName").val(), 'statement': $("#statement").val() }));
 	$("#statement").val('');
 }
 
+/**
+ * 受信したメッセージを表示します。
+ */
 function showMessage(message) {
 	// 受信したメッセージを整形して表示
 	$("#message").append(
 		"<tr><td>" + message.name + ": " + message.statement + "</td></tr>");
+	// 表示後、スクロールバーを一番下に下げる
+	scrollBottom();
 }
 
 window.addEventListener('DOMContentLoaded', function() {
@@ -59,6 +76,22 @@ window.addEventListener('DOMContentLoaded', function() {
 	$("#send").click(function() {
 		sendMessage();
 	});
+	
+	$(document).ready( function(){
+		scrollBottom();
+	});
 });
 
 setTimeout("connect()", 3000);
+
+/**
+ * ページの一番下までスクロールします。
+ */
+function scrollBottom(){
+  let elm = document.documentElement;
+  // scrollHeight ページの高さ clientHeight ブラウザの高さ
+  let bottom = elm.scrollHeight - elm.clientHeight;
+  // 垂直方向へ移動
+  window.scroll(0, bottom);
+
+}

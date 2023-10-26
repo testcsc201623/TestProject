@@ -34,4 +34,29 @@ public class ThreadTbl {
 
 	@Column(name = "update_date_time")
 	public Date updateDateTime;
+
+	/**
+	 * コンストラクタ
+	 */
+	public ThreadTbl() {
+	}
+
+	/**
+	 * コンストラクタ
+	 * @param titleId タイトルID
+	 * @param messageNumber メッセージ番号
+	 * @param userId ユーザID
+	 * @param comment コメント
+	 * @param createDateTime 作成日
+	 * @param updateDateTime 更新日
+	 */
+	public ThreadTbl(String titleId, int messageNumber, String userId, String comment, Date createDateTime,
+			Date updateDateTime) {
+		this.titleId = titleId;
+		this.messageNumber = messageNumber;
+		this.userId = userId;
+		this.comment = comment;
+		this.createDateTime = createDateTime;
+		this.updateDateTime = updateDateTime;
+	}
 }

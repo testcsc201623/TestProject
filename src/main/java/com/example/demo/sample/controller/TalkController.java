@@ -1,5 +1,7 @@
 package com.example.demo.sample.controller;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -9,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.util.HtmlUtils;
 
+import com.example.demo.common.entity.ThreadTbl;
 import com.example.demo.common.model.Message;
 import com.example.demo.common.model.Session;
 import com.example.demo.sample.dao.ThreadTblDao;
@@ -36,7 +39,9 @@ public class TalkController {
 	@SendTo("/receive/message")
 	public Message send(Message message) throws Exception {
 		Thread.sleep(1000);
-		//TODO user_idをセッションから取得し、送信された情報のDB登録
-		return new Message(HtmlUtils.htmlEscape(message.getName()), HtmlUtils.htmlEscape(message.getStatement()));
+		var now = new Date();
+		threadTblDao.createThread(new ThreadTbl("1", threadTblDao.getMaxMessageNumber() + 1,
+				HtmlUtils.htmlEscape(message.getId()), message.getStatement(), now, now));
+		return new Message(HtmlUtils.htmlEscape(message.getId()),HtmlUtils.htmlEscape(message.getName()), HtmlUtils.htmlEscape(message.getStatement()));
 	}
 }

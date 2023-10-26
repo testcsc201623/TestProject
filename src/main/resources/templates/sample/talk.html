@@ -5,6 +5,7 @@
 	<meta charset="utf-8" />
 	<title>トーク</title>
 	<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{/css/talk.css}">
 	<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}" defer></script>
 	<script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" defer></script>
 	<script type="text/javascript" th:src="@{/webjars/stomp-websocket/stomp.min.js}"></script>
@@ -12,53 +13,58 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.2/sockjs.min.js"></script>
 </head>
 
-<body>
+<body class="fixed-menu-body">
 	<div class="container-fluid">
-		<h1>トーク</h1>
-		<div class="alert alert-danger" role="alert" th:if="${errorMessage != null}" th:text="${errorMessage}" />
-		<div class="alert alert-success" role="alert" th:if="${successMessage != null}" th:text="${successMessage}" />
-		<div class='btn-toolbar' role="toolbar" style="margin:20px 0px;">
-			<form method="get" th:action="@{/sample/menu}">
-				<div class="btn-group mr-3" role="group">
-					<button type="submit" class="btn btn-primary" onclick="disconnect();">
-						<div class="mx-2">
-							メニューへ戻る
-						</div>
-					</button>
+		<div class="fixed-menu">
+			<h1>トーク</h1>
+			<div class="alert alert-danger" role="alert" th:if="${errorMessage != null}" th:text="${errorMessage}" />
+			<div class="alert alert-success" role="alert" th:if="${successMessage != null}"
+				th:text="${successMessage}" />
+			<div class='btn-toolbar' role="toolbar" style="margin:20px 0px;">
+				<form method="get" th:action="@{/sample/menu}">
+					<div class="btn-group mr-3" role="group">
+						<button type="submit" class="btn btn-primary" onclick="disconnect();">
+							<div class="mx-2">
+								メニューへ戻る
+							</div>
+						</button>
+					</div>
+				</form>
+			</div>
+			<div class="form-group">
+				<label for="connect">通信:</label>
+				<button id="connect" type="submit" class="btn btn-primary">接続</button>
+				<button id="disconnect" type="submit" class="btn btn-danger" disabled="disabled">切断</button>
+			</div>
+		</div>
+		<div class="main">
+			<table>
+				<th:block th:each="response : ${responseList}">
+					<tbody>
+						<tr>
+							<td th:text="|${response.userName}: ${response.comment}|" />
+						</tr>
+					</tbody>
+				</th:block>
+				<tbody id="message">
+				</tbody>
+			</table>
+		</div>
+		<div class="footer_area">
+			<form id="sendMessage">
+				<input type="hidden" id="userId" th:value="${user.userId}">
+				<input type="hidden" id="userName" th:value="${user.userName}">
+				<div class="form-group">
+					<label for="statement">メッセージ</label>
+					<input type="text" class="form-control" id="statement" placeholder="Your Message">
 				</div>
+				<button id="send" type="submit" class="btn btn-primary">
+					<div class="mx-2">
+						送信
+					</div>
+				</button>
 			</form>
 		</div>
-		<div class="form-group">
-			<label for="connect">通信:</label>
-			<button id="connect" type="submit" class="btn btn-primary">接続</button>
-			<button id="disconnect" type="submit" class="btn btn-danger" disabled="disabled">切断</button>
-		</div>
-		<table>
-			<th:block th:each="response : ${responseList}">
-				<tbody>
-					<tr>
-						<td th:text="|${response.userName}: ${response.comment}|" />
-					</tr>
-				</tbody>
-			</th:block>
-			<tbody id="message">
-			</tbody>
-		</table>
-		<form id="sendMessage">
-			<div class="form-group">
-				<label for="name">名前</label>
-				<input type="text" class="form-control" id="name" th:value="${user.userName}" readonly="readonly">
-			</div>
-			<div class="form-group">
-				<label for="name">メッセージ</label>
-				<input type="text" class="form-control" id="statement" placeholder="Your Message">
-			</div>
-			<button id="send" type="submit" class="btn btn-primary">
-				<div class="mx-2">
-					送信
-				</div>
-			</button>
-		</form>
 	</div>
 </body>
 

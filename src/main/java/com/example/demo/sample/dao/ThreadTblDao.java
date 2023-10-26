@@ -3,6 +3,7 @@ package com.example.demo.sample.dao;
 import java.util.List;
 
 import org.seasar.doma.Dao;
+import org.seasar.doma.Insert;
 import org.seasar.doma.Select;
 import org.seasar.doma.boot.ConfigAutowireable;
 
@@ -17,4 +18,10 @@ public interface ThreadTblDao {
 	
 	@Select
     List<Response> selectResponseList();
+	
+	@Select
+	int getMaxMessageNumber();
+	
+	@Insert
+	int createThread(ThreadTbl threadTbl);
 }
