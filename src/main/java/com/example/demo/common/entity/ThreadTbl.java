@@ -16,7 +16,7 @@ public class ThreadTbl {
 
 	@Id
 	@Column(name = "title_id")
-	public String titleId;
+	public int titleId;
 
 	@Id
 	@Column(name = "message_number")
@@ -50,7 +50,7 @@ public class ThreadTbl {
 	 * @param createDateTime 作成日
 	 * @param updateDateTime 更新日
 	 */
-	public ThreadTbl(String titleId, int messageNumber, String userId, String comment, Date createDateTime,
+	public ThreadTbl(int titleId, int messageNumber, String userId, String comment, Date createDateTime,
 			Date updateDateTime) {
 		this.titleId = titleId;
 		this.messageNumber = messageNumber;

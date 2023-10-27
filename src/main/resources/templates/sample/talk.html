@@ -40,8 +40,11 @@
 		<nav>
 			<h2 class="user-name m-0 p-3" th:text="${user.userName}"/>
 			<ul class="nav flex-column m-0 p-3">
-				<li class="nav-item mb-2"><a href="#" class="nav-link">Python</a></li>
-				<li class="nav-item mb-2"><a href="#" class="nav-link">Django</a></li>
+				<th:block th:each="title : ${titleList}">
+					<li class="nav-item mb-2"><a href="#" class="nav-link">
+						<th:block th:text="${title.title}" />
+					</a></li>
+				</th:block>
 			</ul>
 		</nav>
 		<div id="messageArea">

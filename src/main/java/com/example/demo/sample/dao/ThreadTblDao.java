@@ -15,13 +15,13 @@ import com.example.demo.sample.entity.Response;
 public interface ThreadTblDao {
 	@Select
 	List<ThreadTbl> selectAll();
-	
+
 	@Select
-    List<Response> selectResponseList();
-	
+	List<Response> selectResponseList();
+
 	@Select
 	int getMaxMessageNumber();
-	
+
 	@Insert
 	int createThread(ThreadTbl threadTbl);
 }

@@ -27,3 +27,11 @@ create table thread_tbl(
     update_date_time DATETIME not null,
     primary key(title_id, message_number)
 );
+
+drop table if exists title_permission_tbl;
+create table title_permission_tbl (
+    title_id int(8) not null,
+    user_id varchar(128) not null,
+    admin_flg INT(1) not null,
+    primary key(title_id,user_id)
+);
