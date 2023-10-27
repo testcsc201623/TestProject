@@ -45,7 +45,7 @@ function disconnect() {
  * メッセージをバック側に送信します。
  */
 function sendMessage() {
-	if ($("#statement").val().length > 0) {
+	if ($("#statement").val().replace(/\s+/g, '').length > 0) {
 		window.sessionStorage.getItem(['user']);
 		// /send/messageエンドポイントにメッセージを送信する
 		stompClient.send("/send/message", {}, JSON.stringify(
@@ -63,7 +63,7 @@ function showMessage(message) {
 		"<tr><td class=\"user-name-font\">" + message.name + "</td></tr><tr><td> " + message.statement.replace(/\n/g, '<br>') + "</td></tr>");
 	// 表示後、メッセージエリア、メッセージ入力ボックスのサイズ調整とスクロールの位置調整を実施する
 	$("#statement").css({
-		'height': `auto`,           // 1camelCase形式で指定
+		'height': `auto`, 
 	});
 	changeMainAreaHeight();
 	scrollBottom();

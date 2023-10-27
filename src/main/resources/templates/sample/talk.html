@@ -13,7 +13,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.2/sockjs.min.js"></script>
 </head>
 
-<body class="fixed-menu-body">
+<body>
 	<div class="container-fluid">
 		<div class="fixed-header">
 			<h1>トーク</h1>
@@ -37,6 +37,13 @@
 				<button id="disconnect" type="submit" class="btn btn-danger" disabled="disabled">切断</button>
 			</div>
 		</div>
+		<nav>
+			<h2 class="user-name m-0 p-3" th:text="${user.userName}"/>
+			<ul class="nav flex-column m-0 p-3">
+				<li class="nav-item mb-2"><a href="#" class="nav-link">Python</a></li>
+				<li class="nav-item mb-2"><a href="#" class="nav-link">Django</a></li>
+			</ul>
+		</nav>
 		<div id="messageArea">
 			<table>
 				<tbody>
@@ -54,7 +61,6 @@
 								</th:block>
 							</td>
 						</tr>
-
 					</th:block>
 				</tbody>
 				<tbody id="message">
