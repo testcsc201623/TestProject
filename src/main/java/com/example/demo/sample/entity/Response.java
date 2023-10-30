@@ -11,6 +11,9 @@ import lombok.Data;
 @Data
 public class Response {
 
+	@Column(name = "title_id")
+	public int titleId;
+
 	@Column(name = "message_number")
 	public int messageNumber;
 

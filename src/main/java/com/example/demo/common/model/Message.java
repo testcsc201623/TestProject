@@ -5,13 +5,13 @@ import lombok.Data;
 @Data
 public class Message {
 
-	private String id;
-	private String name;
+	private String userId;
+	private String userName;
 	private String statement;
 
-	public Message(String id, String name, String statement) {
-		this.id = id;
-		this.name = name;
+	public Message(String userId, String userName, String statement) {
+		this.userId = userId;
+		this.userName = userName;
 		this.statement = statement;
 	}
 }

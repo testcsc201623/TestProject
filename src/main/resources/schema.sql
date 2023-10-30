@@ -35,3 +35,12 @@ create table title_permission_tbl (
     admin_flg INT(1) not null,
     primary key(title_id,user_id)
 );
+
+drop table if exists last_title_viewed_tbl;
+create table last_title_viewed_tbl (
+    user_id varchar(128) not null,
+    title_id int(8) not null,
+    create_date_time DATETIME not null,
+    update_date_time DATETIME not null,
+    primary key(user_id,title_id)
+);

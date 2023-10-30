@@ -14,6 +14,7 @@ import org.springframework.web.util.HtmlUtils;
 import com.example.demo.common.entity.ThreadTbl;
 import com.example.demo.common.model.Message;
 import com.example.demo.common.model.Session;
+import com.example.demo.sample.dao.LastTitleViewedTblDao;
 import com.example.demo.sample.dao.ThreadTblDao;
 import com.example.demo.sample.dao.TitleTblDao;
 
@@ -25,6 +26,7 @@ public class TalkController {
 
 	private final TitleTblDao titleTblDao;
 	private final ThreadTblDao threadTblDao;
+	private final LastTitleViewedTblDao lastTitleViewedTblDao;
 
 	@GetMapping(path = "/sample/talk")
 	public String loginPage(HttpServletRequest request, Model model) {
@@ -32,8 +34,10 @@ public class TalkController {
 			model.addAttribute("errorMessage", Session.getErrorMessage(request));
 			Session.setErrorMessage(request, null);
 		}
-		model.addAttribute("titleList", titleTblDao.selectBrowsableThreadTblList(Session.getUser(request).getUserId()));
-		model.addAttribute("responseList", threadTblDao.selectResponseList());
+		var userId = Session.getUser(request).getUserId();
+		var titleId = lastTitleViewedTblDao.selectUser(userId).get(0).getTitleId();
+		model.addAttribute("titleList", titleTblDao.selectBrowsableThreadTblList(userId));
+		model.addAttribute("responseList", threadTblDao.selectResponseList(titleId));
 		model.addAttribute("user", Session.getUser(request));
 		return "sample/talk";
 	}
@@ -44,7 +48,7 @@ public class TalkController {
 		Thread.sleep(1000);
 		var now = new Date();
 		threadTblDao.createThread(new ThreadTbl(1, threadTblDao.getMaxMessageNumber() + 1,
-				HtmlUtils.htmlEscape(message.getId()), message.getStatement(), now, now));
-		return new Message(HtmlUtils.htmlEscape(message.getId()),HtmlUtils.htmlEscape(message.getName()), HtmlUtils.htmlEscape(message.getStatement()));
+				HtmlUtils.htmlEscape(message.getUserId()), message.getStatement(), now, now));
+		return new Message(HtmlUtils.htmlEscape(message.getUserId()),HtmlUtils.htmlEscape(message.getUserName()), HtmlUtils.htmlEscape(message.getStatement()));
 	}
 }

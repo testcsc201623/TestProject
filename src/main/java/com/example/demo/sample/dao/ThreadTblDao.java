@@ -17,7 +17,7 @@ public interface ThreadTblDao {
 	List<ThreadTbl> selectAll();
 
 	@Select
-	List<Response> selectResponseList();
+	List<Response> selectResponseList(int titleId);
 
 	@Select
 	int getMaxMessageNumber();

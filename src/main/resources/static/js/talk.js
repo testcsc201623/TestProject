@@ -49,7 +49,7 @@ function sendMessage() {
 		window.sessionStorage.getItem(['user']);
 		// /send/messageエンドポイントにメッセージを送信する
 		stompClient.send("/send/message", {}, JSON.stringify(
-			{ 'id': $("#userId").val(), 'name': $("#userName").val(), 'statement': $("#statement").val() }));
+			{ 'userId': $("#userId").val(), 'userName': $("#userName").val(), 'statement': $("#statement").val() }));
 		$("#statement").val('');
 	}
 }
@@ -60,7 +60,7 @@ function sendMessage() {
 function showMessage(message) {
 	// 受信したメッセージを整形して表示
 	$("#message").append(
-		"<tr><td class=\"user-name-font\">" + message.name + "</td></tr><tr><td> " + message.statement.replace(/\n/g, '<br>') + "</td></tr>");
+		"<tr><td class=\"user-name-font\">" + message.userName + "</td></tr><tr><td> " + message.statement.replace(/\n/g, '<br>') + "</td></tr>");
 	// 表示後、メッセージエリア、メッセージ入力ボックスのサイズ調整とスクロールの位置調整を実施する
 	$("#statement").css({
 		'height': `auto`, 
