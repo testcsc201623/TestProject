@@ -38,12 +38,17 @@
 			</div>
 		</div>
 		<nav>
-			<h2 class="user-name m-0 p-3" th:text="${user.userName}"/>
+			<h2 class="user-name m-0 p-3" th:text="${user.userName}" />
 			<ul class="nav flex-column m-0 p-3">
 				<th:block th:each="title : ${titleList}">
-					<li class="nav-item mb-2"><a href="#" class="nav-link">
-						<th:block th:text="${title.title}" />
-					</a></li>
+					<li class="nav-item mb-2">
+						<form method="post" action="/selectTitle">
+							<a href="javascript:void(0)" onclick="this.parentNode.submit()" class="nav-link">
+								<th:block th:text="${title.title}" />
+							</a>
+							<input type="hidden" th:id="titleId" th:name="titleId" th:value="${title.titleId}">
+						</form>
+					</li>
 				</th:block>
 			</ul>
 		</nav>

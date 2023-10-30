@@ -18,7 +18,6 @@ public class LastTitleViewedTbl {
 	@Column(name = "user_id")
 	public String userId;
 
-	@Id
 	@Column(name = "title_id")
 	public int titleId;
 
@@ -27,4 +26,37 @@ public class LastTitleViewedTbl {
 
 	@Column(name = "update_date_time")
 	public Date updateDateTime;
+
+	/**
+	 * コンストラクタ
+	 */
+	public LastTitleViewedTbl() {
+
+	}
+
+	/**
+	 * コンストラクタ
+	 * @param userId ユーザID
+	 * @param titleId タイトルID
+	 * @param updateDateTime 更新日時
+	 */
+	public LastTitleViewedTbl(String userId, int titleId, Date updateDateTime) {
+		this.userId = userId;
+		this.titleId = titleId;
+		this.updateDateTime = updateDateTime;
+	}
+
+	/**
+	 * コンストラクタ
+	 * @param userId ユーザID
+	 * @param titleId タイトルID
+	 * @param createDateTime 作成日時
+	 * @param updateDateTime 更新日時
+	 */
+	public LastTitleViewedTbl(String userId, int titleId, Date createDateTime, Date updateDateTime) {
+		this.userId = userId;
+		this.titleId = titleId;
+		this.createDateTime = createDateTime;
+		this.updateDateTime = updateDateTime;
+	}
 }

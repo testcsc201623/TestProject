@@ -42,5 +42,5 @@ create table last_title_viewed_tbl (
     title_id int(8) not null,
     create_date_time DATETIME not null,
     update_date_time DATETIME not null,
-    primary key(user_id,title_id)
+    primary key(user_id)
 );

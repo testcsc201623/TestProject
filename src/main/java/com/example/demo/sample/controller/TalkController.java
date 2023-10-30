@@ -1,5 +1,6 @@
 package com.example.demo.sample.controller;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,9 +10,14 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.HtmlUtils;
 
+import com.example.demo.common.entity.LastTitleViewedTbl;
 import com.example.demo.common.entity.ThreadTbl;
+import com.example.demo.common.entity.TitleTbl;
 import com.example.demo.common.model.Message;
 import com.example.demo.common.model.Session;
 import com.example.demo.sample.dao.LastTitleViewedTblDao;
@@ -29,17 +35,51 @@ public class TalkController {
 	private final LastTitleViewedTblDao lastTitleViewedTblDao;
 
 	@GetMapping(path = "/sample/talk")
-	public String loginPage(HttpServletRequest request, Model model) {
+	public String talkPage(HttpServletRequest request, Model model) {
 		if (Session.getErrorMessage(request) != null) {
 			model.addAttribute("errorMessage", Session.getErrorMessage(request));
 			Session.setErrorMessage(request, null);
 		}
-		var userId = Session.getUser(request).getUserId();
-		var titleId = lastTitleViewedTblDao.selectUser(userId).get(0).getTitleId();
-		model.addAttribute("titleList", titleTblDao.selectBrowsableThreadTblList(userId));
-		model.addAttribute("responseList", threadTblDao.selectResponseList(titleId));
+		// 閲覧権限があるタイトル一覧をモデルにセットする
+		model.addAttribute("titleList", titleTblDao.selectBrowsableThreadTblList(Session.getUser(request).getUserId()));
+		// 最後に閲覧したタイトルを取得し、閲覧データがあればレスの一覧をモデルにセットする
+		var titleIdArray = lastTitleViewedTblDao.selectUser(Session.getUser(request).getUserId());
+		if (titleIdArray.size() > 0) {
+			model.addAttribute("responseList", threadTblDao.selectResponseList(titleIdArray.get(0).getTitleId()));
+		}
 		model.addAttribute("user", Session.getUser(request));
 		return "sample/talk";
+	}
+
+	@PostMapping(path = "/selectTitle")
+	public String updateAccount(HttpServletRequest request, RedirectAttributes redirectAttribute,
+			@RequestParam("titleId") int titleId)
+			throws NoSuchAlgorithmException {
+		// 指定したタイトルIDの閲覧権限があるか判定する
+		var titleList = titleTblDao.selectBrowsableThreadTblList(Session.getUser(request).getUserId());
+		for (TitleTbl title : titleList) {
+			// 閲覧権限があれば最終閲覧テーブルの更新処理を実行する
+			if (title.getTitleId() == titleId) {
+				var now = new Date();
+				// 最終閲覧テーブルを更新、ない場合は作成してトークページ表示にリダイレクトすることで画面表示する
+				if (lastTitleViewedTblDao.selectUser(Session.getUser(request).getUserId()).size() > 0) {
+					if (lastTitleViewedTblDao
+							.updateUser(
+									new LastTitleViewedTbl(Session.getUser(request).getUserId(), titleId, now)) < 1) {
+						Session.setErrorMessage(request, "テーブル情報を取得できませんでした。");
+					}
+				} else {
+					if (lastTitleViewedTblDao
+							.createUser(new LastTitleViewedTbl(Session.getUser(request).getUserId(), titleId, now,
+									now)) < 1) {
+						Session.setErrorMessage(request, "テーブル情報を取得できませんでした。");
+					}
+				}
+				return "redirect:sample/talk";
+			}
+		}
+		Session.setErrorMessage(request, "指定したタイトルは閲覧権限がありません。");
+		return "redirect:sample/talk";
 	}
 
 	@MessageMapping("/message")

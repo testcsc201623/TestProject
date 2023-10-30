@@ -8,4 +8,3 @@ insert into title_permission_tbl(title_id,user_id,admin_flg) values (1, 'admin',
 insert into title_permission_tbl(title_id,user_id,admin_flg) values (1, 'ippan', 0);
 insert into title_permission_tbl(title_id,user_id,admin_flg) values (2, 'admin', 1);
 insert into last_title_viewed_tbl(user_id,title_id, create_date_time, update_date_time) values ('admin', 1, '2021-09-22 09:00:00', '2021-09-22 09:00:00');
-insert into last_title_viewed_tbl(user_id,title_id, create_date_time, update_date_time) values ('ippan', 1, '2021-09-22 09:00:00', '2021-09-22 09:00:00');
