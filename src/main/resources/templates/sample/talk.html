@@ -9,7 +9,7 @@
 	<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}" defer></script>
 	<script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" defer></script>
 	<script type="text/javascript" th:src="@{/webjars/stomp-websocket/stomp.min.js}"></script>
-	<script type="text/javascript" th:src="@{/js/talk.js}"></script>
+	<script type="text/javascript" th:inline="javascript" th:src="@{/js/talk.js}"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.2/sockjs.min.js"></script>
 </head>
 
@@ -72,11 +72,11 @@
 		</div>
 		<div id="footer_area">
 			<form id="sendMessage">
-				<input type="hidden" id="userId" th:value="${user.userId}">
-				<input type="hidden" id="userName" th:value="${user.userName}">
+				<input type="hidden" th:id="userId" th:name="userId" th:value="${user.userId}">
+				<input type="hidden" th:id="userName" th:name="userName" th:value="${user.userName}">
 				<div class="form-group">
 					<label for="statement">メッセージ</label>
-					<textarea class="form-control" id="statement" rows="1"></textarea>
+					<textarea class="form-control" th:id="statement" th:name="statement" rows="1"></textarea>
 				</div>
 				<button id="send" type="submit" class="btn btn-primary">
 					<div class="mx-2">

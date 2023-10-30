@@ -46,7 +46,6 @@ function disconnect() {
  */
 function sendMessage() {
 	if ($("#statement").val().replace(/\s+/g, '').length > 0) {
-		window.sessionStorage.getItem(['user']);
 		// /send/messageエンドポイントにメッセージを送信する
 		stompClient.send("/send/message", {}, JSON.stringify(
 			{ 'userId': $("#userId").val(), 'userName': $("#userName").val(), 'statement': $("#statement").val() }));
@@ -63,7 +62,7 @@ function showMessage(message) {
 		"<tr><td class=\"user-name-font\">" + message.userName + "</td></tr><tr><td> " + message.statement.replace(/\n/g, '<br>') + "</td></tr>");
 	// 表示後、メッセージエリア、メッセージ入力ボックスのサイズ調整とスクロールの位置調整を実施する
 	$("#statement").css({
-		'height': `auto`, 
+		'height': `auto`,
 	});
 	changeMainAreaHeight();
 	scrollBottom();
@@ -126,7 +125,7 @@ function scrollBottom() {
  * メインエリアの下マージンをフッターの高さによって変更する
  */
 function changeMainAreaHeight() {
-	let paddingBottomHeight = $('#footer_area').height() +10;
+	let paddingBottomHeight = $('#footer_area').height() + 10;
 	$("#messageArea").css({
 		'padding-bottom': paddingBottomHeight + `px`,
 	});

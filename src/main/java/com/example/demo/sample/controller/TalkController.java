@@ -49,6 +49,7 @@ public class TalkController {
 		var now = new Date();
 		threadTblDao.createThread(new ThreadTbl(1, threadTblDao.getMaxMessageNumber() + 1,
 				HtmlUtils.htmlEscape(message.getUserId()), message.getStatement(), now, now));
-		return new Message(HtmlUtils.htmlEscape(message.getUserId()),HtmlUtils.htmlEscape(message.getUserName()), HtmlUtils.htmlEscape(message.getStatement()));
+		return new Message(HtmlUtils.htmlEscape(message.getUserId()), HtmlUtils.htmlEscape(message.getUserName()),
+				HtmlUtils.htmlEscape(message.getStatement()));
 	}
 }
