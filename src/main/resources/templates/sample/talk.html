@@ -33,24 +33,35 @@
 				</form>
 			</div>
 			<div class='row' th:if="${title != null}">
-				<div class="col-6">
+				<div class="col-5">
 					<h2 th:text="${title.title}" />
 				</div>
-				<div class="col-3">
-					<div class="pr-5">
-						<div class="btn-group">
-							<button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
-								aria-haspopup="true" aria-expanded="false">メンバ</button>
-							<div class="dropdown-menu">
-								<th:block th:each="permissionUser : ${permissionUserList}">
-									<a class="dropdown-item">
-										<th:block th:text="${permissionUser}" />
-									</a>
-								</th:block>
-								<a class="dropdown-item" href="#" th:if="${adminFlg == 1}">
-									+追加
-								</a>
+				<div class="col-4">
+					<div class="btn-toolbar">
+						<div class="btn-group mr-1" role="group">
+							<div class="pr-2">
+								<div class="btn-group">
+									<button type="button" class="btn btn-secondary dropdown-toggle"
+										data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">メンバ</button>
+									<div class="dropdown-menu">
+										<th:block th:each="permissionUser : ${permissionUserList}">
+											<a class="dropdown-item">
+												<th:block th:text="${permissionUser}" />
+											</a>
+										</th:block>
+									</div>
+								</div>
 							</div>
+						</div>
+						<form method="post" th:action="@{/goEditThread}">
+							<div class="btn-group mr-1" role="group">
+								<input type="hidden" th:id="editTitleId" th:name="editTitleId"
+									th:value="${title.titleId}">
+								<button type="submit" class="btn btn-primary ">編集</button>
+							</div>
+						</form>
+						<div class="btn-group mr-1" role="group">
+							<button type="submit" class="btn btn-danger">削除</button>
 						</div>
 					</div>
 				</div>
@@ -66,6 +77,11 @@
 		<nav>
 			<h2 class="user-name m-0 p-3" th:text="${user.userName}" />
 			<ul class="nav flex-column m-0 p-3">
+				<li class="nav-item mb-2">
+					<a href="javascript:void(0)" onclick="this.parentNode.submit()" class="nav-link nav-create">
+						+スレッド作成
+					</a>
+				</li>
 				<th:block th:each="title : ${titleList}">
 					<li class="nav-item mb-2">
 						<form method="post" action="/selectTitle">

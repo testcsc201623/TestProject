@@ -12,5 +12,8 @@ import com.example.demo.common.entity.TitleTbl;
 @ConfigAutowireable
 public interface TitleTblDao {
 	@Select
+	List<TitleTbl> selectTitle(int titleId);
+
+	@Select
 	List<TitleTbl> selectBrowsableThreadTblList(String userId);
 }

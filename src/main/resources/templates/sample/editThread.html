@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>スレッド編集</title>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+	<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}" defer></script>
+	<script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" defer></script>
+</head>
+
+<body>
+
+	<div class="container-fluid">
+		<h1>スレッド編集</h1>
+		<div class="alert alert-danger" role="alert" th:if="${errorMessage != null}" th:text="${errorMessage}" />
+		<div class="alert alert-success" role="alert" th:if="${successMessage != null}" th:text="${successMessage}" />
+		<div class='btn-toolbar' role="toolbar" style="margin:20px 0px;">
+			<form method="get" th:action="@{/sample/menu}">
+				<div class="btn-group mr-3" role="group">
+					<button type="submit" class="btn btn-primary">
+						<div class="mx-2">
+							メニューへ戻る
+						</div>
+					</button>
+				</div>
+			</form>
+			<form method="get" th:action="@{/sample/talk}">
+				<div class="btn-group mr-3" role="group">
+					<button type="submit" class="btn btn-primary">
+						<div class="mx-2">
+							トークへ戻る
+						</div>
+					</button>
+				</div>
+			</form>
+		</div>
+		<div>
+			<hr>
+			<h2>スレッド情報変更</h2>
+			<form method="post" th:action="@{/editThread}">
+				<div class="form-group">
+					<label for="threadName">スレッド名</label>
+					<input type="text" class="form-control" id="threadName" name="threadName" th:value="${title.title}"
+						readonly="readonly">
+				</div>
+				<button type="submit" class="btn btn-primary">
+					<div class="mx-2">
+						更新
+					</div>
+				</button>
+			</form>
+		</div>
+	</div>
+
+</body>
+
+</html>

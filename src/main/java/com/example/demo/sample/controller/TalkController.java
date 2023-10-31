@@ -54,7 +54,8 @@ public class TalkController {
 				if (titleIdArray.get(0).getTitleId() == title.getTitleId()) {
 					model.addAttribute("title", title);
 					model.addAttribute("permissionUserList", titlePermissionTblDao.selectUserList(title.getTitleId()));
-					model.addAttribute("adminFlg", titlePermissionTblDao.selectAdminFlgList(title.getTitleId(), Session.getUser(request).getUserId()).get(0));
+					model.addAttribute("adminFlg", titlePermissionTblDao
+							.selectAdminFlgList(title.getTitleId(), Session.getUser(request).getUserId()).get(0));
 				}
 			}
 		}
@@ -104,5 +105,13 @@ public class TalkController {
 		return new Message(message.getTitleId(), HtmlUtils.htmlEscape(message.getUserId()),
 				HtmlUtils.htmlEscape(message.getUserName()),
 				HtmlUtils.htmlEscape(message.getStatement()));
+	}
+
+	@PostMapping(path = "/goEditThread")
+	public String goEditThread(HttpServletRequest request, RedirectAttributes redirectAttribute,
+			@RequestParam("editTitleId") String editTitleId) {
+		redirectAttribute.addAttribute("editTitleId", editTitleId);
+		Session.setErrorMessage(request, null);
+		return "redirect:sample/editThread";
 	}
 }
