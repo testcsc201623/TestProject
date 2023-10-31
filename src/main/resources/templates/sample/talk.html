@@ -46,7 +46,7 @@
 							<a href="javascript:void(0)" onclick="this.parentNode.submit()" class="nav-link">
 								<th:block th:text="${title.title}" />
 							</a>
-							<input type="hidden" th:id="titleId" th:name="titleId" th:value="${title.titleId}">
+							<input type="hidden" th:id="selectTitleId" th:name="selectTitleId" th:value="${title.titleId}">
 						</form>
 					</li>
 				</th:block>
@@ -75,8 +75,9 @@
 				</tbody>
 			</table>
 		</div>
-		<div id="footer_area">
+		<div id="footer_area" th:if="${titleId != null}">
 			<form id="sendMessage">
+				<input type="hidden" th:id="sendTitleId" th:name="sendTitleId" th:value="${titleId}">
 				<input type="hidden" th:id="userId" th:name="userId" th:value="${user.userId}">
 				<input type="hidden" th:id="userName" th:name="userName" th:value="${user.userName}">
 				<div class="form-group">

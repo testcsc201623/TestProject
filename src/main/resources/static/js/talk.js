@@ -48,7 +48,7 @@ function sendMessage() {
 	if ($("#statement").val().replace(/\s+/g, '').length > 0) {
 		// /send/messageエンドポイントにメッセージを送信する
 		stompClient.send("/send/message", {}, JSON.stringify(
-			{ 'userId': $("#userId").val(), 'userName': $("#userName").val(), 'statement': $("#statement").val() }));
+			{ 'titleId': $("#sendTitleId").val(),'userId': $("#userId").val(), 'userName': $("#userName").val(), 'statement': $("#statement").val() }));
 		$("#statement").val('');
 	}
 }
@@ -58,12 +58,14 @@ function sendMessage() {
  */
 function showMessage(message) {
 	// 受信したメッセージを整形して表示
-	$("#message").append(
-		"<tr><td class=\"user-name-font\">" + message.userName + "</td></tr><tr><td> " + message.statement.replace(/\n/g, '<br>') + "</td></tr>");
-	// 表示後、メッセージエリア、メッセージ入力ボックスのサイズ調整とスクロールの位置調整を実施する
-	$("#statement").css({
-		'height': `auto`,
-	});
+	if ($("#sendTitleId").val() == message.titleId) {
+		$("#message").append(
+			"<tr><td class=\"user-name-font\">" + message.userName + "</td></tr><tr><td> " + message.statement.replace(/\n/g, '<br>') + "</td></tr>");
+		// 表示後、メッセージエリア、メッセージ入力ボックスのサイズ調整とスクロールの位置調整を実施する
+		$("#statement").css({
+			'height': `auto`,
+		});
+	}
 	changeMainAreaHeight();
 	scrollBottom();
 }
