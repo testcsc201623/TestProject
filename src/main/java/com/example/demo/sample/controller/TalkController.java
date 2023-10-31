@@ -22,6 +22,7 @@ import com.example.demo.common.model.Message;
 import com.example.demo.common.model.Session;
 import com.example.demo.sample.dao.LastTitleViewedTblDao;
 import com.example.demo.sample.dao.ThreadTblDao;
+import com.example.demo.sample.dao.TitlePermissionTblDao;
 import com.example.demo.sample.dao.TitleTblDao;
 
 import lombok.RequiredArgsConstructor;
@@ -33,6 +34,7 @@ public class TalkController {
 	private final TitleTblDao titleTblDao;
 	private final ThreadTblDao threadTblDao;
 	private final LastTitleViewedTblDao lastTitleViewedTblDao;
+	private final TitlePermissionTblDao titlePermissionTblDao;
 
 	@GetMapping(path = "/sample/talk")
 	public String talkPage(HttpServletRequest request, Model model) {
@@ -41,12 +43,20 @@ public class TalkController {
 			Session.setErrorMessage(request, null);
 		}
 		// 閲覧権限があるタイトル一覧をモデルにセットする
-		model.addAttribute("titleList", titleTblDao.selectBrowsableThreadTblList(Session.getUser(request).getUserId()));
+		var titleList = titleTblDao.selectBrowsableThreadTblList(Session.getUser(request).getUserId());
+		model.addAttribute("titleList", titleList);
 		// 最後に閲覧したタイトルを取得し、閲覧データがあればレスの一覧をモデルにセットする
 		var titleIdArray = lastTitleViewedTblDao.selectUser(Session.getUser(request).getUserId());
 		if (titleIdArray.size() > 0) {
 			model.addAttribute("responseList", threadTblDao.selectResponseList(titleIdArray.get(0).getTitleId()));
-			model.addAttribute("titleId", titleIdArray.get(0).getTitleId());
+			for (var title : titleList) {
+				// 選択されたタイトルの情報を選択する
+				if (titleIdArray.get(0).getTitleId() == title.getTitleId()) {
+					model.addAttribute("title", title);
+					model.addAttribute("permissionUserList", titlePermissionTblDao.selectUserList(title.getTitleId()));
+					model.addAttribute("adminFlg", titlePermissionTblDao.selectAdminFlgList(title.getTitleId(), Session.getUser(request).getUserId()).get(0));
+				}
+			}
 		}
 		model.addAttribute("user", Session.getUser(request));
 		return "sample/talk";
@@ -66,7 +76,8 @@ public class TalkController {
 				if (lastTitleViewedTblDao.selectUser(Session.getUser(request).getUserId()).size() > 0) {
 					if (lastTitleViewedTblDao
 							.updateUser(
-									new LastTitleViewedTbl(Session.getUser(request).getUserId(), selectTitleId, now)) < 1) {
+									new LastTitleViewedTbl(Session.getUser(request).getUserId(), selectTitleId,
+											now)) < 1) {
 						Session.setErrorMessage(request, "テーブル情報を取得できませんでした。");
 					}
 				} else {
