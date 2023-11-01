@@ -8,7 +8,6 @@
 		<version>2.5.2</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	
 	<groupId>TestProject</groupId>
 	<artifactId>example</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
@@ -60,13 +59,18 @@
 		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>jquery</artifactId>
-			<version>3.5.1</version>
+			<version>3.6.0</version>
 		</dependency>
 		<!-- bootstrap -->
 		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>bootstrap</artifactId>
 			<version>4.5.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>bootstrap-multiselect</artifactId>
+			<version>0.9.13</version>
 		</dependency>
 		<!-- webjars-locator -->
 		<dependency>
@@ -89,10 +93,10 @@
 			<version>2.3.3</version>
 		</dependency>
 		<dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>popper.js</artifactId>
-            <version>1.14.7</version>
-        </dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>popper.js</artifactId>
+			<version>1.14.7</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
