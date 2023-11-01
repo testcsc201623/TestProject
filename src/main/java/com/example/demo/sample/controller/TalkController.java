@@ -110,7 +110,7 @@ public class TalkController {
 	@PostMapping(path = "/goEditThread")
 	public String goEditThread(HttpServletRequest request, RedirectAttributes redirectAttribute,
 			@RequestParam("editTitleId") String editTitleId) {
-		redirectAttribute.addAttribute("editTitleId", editTitleId);
+		redirectAttribute.addAttribute("titleId", editTitleId);
 		Session.setErrorMessage(request, null);
 		return "redirect:sample/editThread";
 	}

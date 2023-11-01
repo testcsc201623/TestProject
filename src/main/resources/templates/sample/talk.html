@@ -53,15 +53,21 @@
 								</div>
 							</div>
 						</div>
-						<form method="post" th:action="@{/goEditThread}">
+						<div th:if="${adminFlg == 1}">
 							<div class="btn-group mr-1" role="group">
-								<input type="hidden" th:id="editTitleId" th:name="editTitleId"
-									th:value="${title.titleId}">
-								<button type="submit" class="btn btn-primary ">編集</button>
+								<form method="post" th:action="@{/goEditThread}">
+									<input type="hidden" th:id="editTitleId" th:name="editTitleId"
+										th:value="${title.titleId}">
+									<button type="submit" class="btn btn-primary">編集</button>
+								</form>
 							</div>
-						</form>
-						<div class="btn-group mr-1" role="group">
-							<button type="submit" class="btn btn-danger">削除</button>
+							<div class="btn-group mr-1" role="group">
+								<form method="post" th:action="@{/goDeleteThread}">
+									<input type="hidden" th:id="deleteTitleId" th:name="deleteTitleId"
+										th:value="${title.titleId}">
+									<button type="submit" class="btn btn-danger">削除</button>
+								</form>
+							</div>
 						</div>
 					</div>
 				</div>
